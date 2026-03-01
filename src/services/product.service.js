@@ -1,0 +1,6 @@
+import * as productApi from '../api/product.api'
+
+export const fetchProducts = async () => {
+  const response = await productApi.getProducts()
+  return response.data
+}

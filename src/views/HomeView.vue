@@ -4,6 +4,7 @@
       <Filter :product-list="productStore.products" :available-products="productList" />
     </div>
     <div>
+      <p class="product-list-title">Products</p>
       <SearchBar @update-search-by-text="searchByText = $event" />
       <ProductList :product-list="productList" />
     </div>
@@ -43,5 +44,10 @@ const productList = computed(() => {
 main {
   display: flex;
   padding: 0 50px;
+}
+.product-list-title {
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: bold;
 }
 </style>

@@ -1,11 +1,11 @@
 <template>
-  <p class="filter-title">Filter</p>
+  <p class="filter-title">Filters</p>
   <div class="filter-container">
     <p class="filter-name">Category</p>
     <div>
       <div v-for="category in categoryList">
         <FilterOption
-          :category="category.name"
+          :category="category"
           :available-products="getNumberOfAvailableProducts(category)"
         />
       </div>
@@ -13,7 +13,9 @@
   </div>
   <div class="filter-container">
     <p class="filter-name">Price Range</p>
-    <div></div>
+    <div>
+      <v-range-slider v-model="price" :min="0" :max="1000" :step="10" thumb-label />
+    </div>
   </div>
   <div class="filter-container">
     <p class="filter-name">Rating</p>
@@ -23,7 +25,10 @@
 
 <script setup>
 import { computed } from 'vue'
-import FilterOption from './filterOption.vue'
+import FilterOption from './FilterOption.vue'
+import { ref } from 'vue'
+
+const price = ref([100, 500])
 
 const props = defineProps({
   productList: {
@@ -38,9 +43,7 @@ const props = defineProps({
 
 const categoryList = computed(() => {
   const categoryArr = [...new Set(props.productList.map((product) => product.category))]
-  return categoryArr.map((category) => {
-    return { name: category, checked: false }
-  })
+  return categoryArr
 })
 
 function getNumberOfAvailableProducts(category) {

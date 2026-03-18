@@ -14,7 +14,6 @@ const searchText = ref('')
 
 function changeSearchText() {
   emit('updateSearchByText', searchText.value)
-  console.error('Qwe emit', searchText)
 }
 </script>
 

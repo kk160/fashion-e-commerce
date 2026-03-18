@@ -26,7 +26,6 @@ const filterByPriceMax = ref(10000)
 
 onMounted(async () => {
   await productStore.loadProducts()
-  console.error('qwe', productStore.products)
 })
 
 const productList = computed(() => {

@@ -1,13 +1,15 @@
 <template>
-  <div class="product-image-container">
-    <img :src="product.image" alt="product.title" />
-  </div>
-  <div class="product-category-container">
-    <p>{{ product.category }}</p>
-  </div>
-  <div class="product-information-container">
-    <p class="product-title">{{ product.title }}</p>
-    <p>$ {{ product.price }}</p>
+  <div class="product-item">
+    <div class="product-image-container product-image-frame">
+      <img :src="product.image" alt="product.title" />
+    </div>
+    <div class="product-category-container">
+      <p>{{ product.category }}</p>
+    </div>
+    <div class="product-information-container">
+      <p class="product-title">{{ product.title }}</p>
+      <p>$ {{ product.price }}</p>
+    </div>
   </div>
 </template>
 
@@ -28,13 +30,6 @@ defineProps({
   margin-bottom: 10px;
   padding: 20px;
   height: 314px;
-  border: solid #d9d9d9;
-  background-color: #f1f2f7;
-}
-.product-image-container img {
-  margin: auto;
-  max-width: 100%;
-  max-height: 100%;
 }
 .product-category-container {
   font-size: 12px;
@@ -49,5 +44,9 @@ defineProps({
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+.product-item {
+  margin-right: 10px;
+  cursor: pointer;
 }
 </style>

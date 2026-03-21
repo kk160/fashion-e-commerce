@@ -1,25 +1,27 @@
 <template>
-  <p class="filter-title">Filters</p>
-  <div class="filter-container">
-    <p class="filter-name">Category</p>
-    <div>
-      <div v-for="category in categoryList">
-        <FilterOption
-          :category="category"
-          :available-products="getNumberOfAvailableProducts(category)"
-        />
+  <div class="filter">
+    <p class="filter-title">Filters</p>
+    <div class="filter-container">
+      <p class="filter-name">Category</p>
+      <div>
+        <div v-for="category in categoryList">
+          <FilterOption
+            :category="category"
+            :available-products="getNumberOfAvailableProducts(category)"
+          />
+        </div>
       </div>
     </div>
-  </div>
-  <div class="filter-container">
-    <p class="filter-name">Price Range</p>
-    <div>
-      <v-range-slider v-model="price" :min="0" :max="1000" :step="10" thumb-label />
+    <div class="filter-container">
+      <p class="filter-name">Price Range</p>
+      <div>
+        <v-range-slider v-model="price" :min="0" :max="1000" :step="10" thumb-label />
+      </div>
     </div>
-  </div>
-  <div class="filter-container">
-    <p class="filter-name">Rating</p>
-    <div></div>
+    <div class="filter-container">
+      <p class="filter-name">Rating</p>
+      <div></div>
+    </div>
   </div>
 </template>
 
@@ -52,6 +54,9 @@ function getNumberOfAvailableProducts(category) {
 </script>
 
 <style scoped>
+.filter {
+  margin-right: 20px;
+}
 .filter-container {
   padding: 25px 0 30px 0;
   width: 266px;

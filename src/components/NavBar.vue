@@ -13,7 +13,7 @@
       <div class="user-action-icon">
         <img src="../assets/icons/icon-cart.svg" alt="Cart" />
       </div>
-      <div class="cart-number-display">0</div>
+      <div class="cart-number-display">{{ cartItemCount }}</div>
     </div>
     <div class="user-action-icon">
       <img src="../assets/icons/icon-login.svg" alt="Login" />
@@ -21,14 +21,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { useCartStore } from '@/stores/cart';
+import { computed } from 'vue';
 import { RouterLink } from 'vue-router'
 
-export default {
-  components: {
-    RouterLink,
-  },
-}
+const cartStore = useCartStore();
+
+const cartItemCount = computed(() => {
+  return cartStore.productList.length;
+})
 </script>
 
 <style scoped>

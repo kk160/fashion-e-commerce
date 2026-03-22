@@ -23,20 +23,22 @@
                     </div>
                     <p>{{ product.description }}</p>
                 </div>
-                <button class="btn-add-to-cart">Add</button>
+                <button @click="addToCart" class="btn-add-to-cart">Add</button>
             </div>
         </div>
     </main>
 </template>
 
 <script setup>
+import { useCartStore } from '@/stores/cart';
 import { useProductStore } from '@/stores/product'
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
-const productId = route.params.id
-const productStore = useProductStore()
+const route = useRoute();
+const productId = route.params.id;
+const productStore = useProductStore();
+const cartStore = useCartStore();
 
 onMounted(async () => {
   await productStore.loadProduct(productId);
@@ -45,6 +47,10 @@ onMounted(async () => {
 const product = computed(() => {
   return productStore.selectedProduct;
 })
+
+const addToCart = () => {
+    cartStore.addProductToCart(product);
+}
 
 </script>
 

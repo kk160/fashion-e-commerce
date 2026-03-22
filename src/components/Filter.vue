@@ -14,8 +14,17 @@
     </div>
     <div class="filter-container">
       <p class="filter-name">Price Range</p>
-      <div>
-        <v-range-slider v-model="price" :min="0" :max="1000" :step="10" thumb-label />
+      <div class="slider-container">
+        <VueSlider 
+          v-model="priceRange" 
+          :min="0" 
+          :max="1000" 
+          :enable-cross="false"
+          :height="6"
+          :process-style="{ backgroundColor: '#000' }"
+          :rail-style="{ backgroundColor: '#d9d9d9' }"
+          :dot-style="{ backgroundColor: '#f1f2f7', border: '2px solid #d9d9d9' }"
+        />
       </div>
     </div>
     <div class="filter-container">
@@ -26,15 +35,14 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch, watchEffect } from 'vue'
 import FilterOption from './FilterOption.vue'
-import { ref } from 'vue'
-
-const price = ref([100, 500])
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/default.css'
 
 const props = defineProps({
   productList: {
-    type: Object,
+    type: Array,
     required: true,
   },
   availableProducts: {
@@ -47,6 +55,28 @@ const categoryList = computed(() => {
   const categoryArr = [...new Set(props.productList.map((product) => product.category))]
   return categoryArr
 })
+
+const prices = props.productList.map(p => p.price)
+
+const min = prices.length ? Math.min(...prices) : 0
+const max = prices.length ? Math.max(...prices) : 0
+
+const minPrice = ref(min)
+const maxPrice = ref(max)
+const priceRange = ref([0, 1000])
+
+watch(
+  () => props.productList,
+  (list) => {
+    if (list.length) {
+      const prices = list.map(p => p.price)
+      minPrice.value = Math.min(...prices)
+      maxPrice.value = Math.max(...prices)
+      priceRange.value = [minPrice.value, maxPrice.value]
+    }
+  },
+  { immediate: true }
+)
 
 function getNumberOfAvailableProducts(category) {
   return props.availableProducts.filter((product) => category == product.category).length
@@ -69,5 +99,19 @@ function getNumberOfAvailableProducts(category) {
 .filter-name {
   margin-bottom: 20px;
   font-weight: bold;
+}
+.slider-container {
+  padding-top: 30px;
+}
+:deep(.vue-slider-dot-handle) {
+  box-shadow: none;
+}
+:deep(.vue-slider-dot-handle-focus) {
+  box-shadow: 0.5px 0.5px 2px 1px rgba(0, 0, 0, 0.32);
+}
+:deep(.vue-slider-dot-tooltip-inner) {
+  border-color: #000;
+  background-color: #000;
+  visibility: visible;
 }
 </style>
